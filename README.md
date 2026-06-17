@@ -153,7 +153,3 @@ pytest
 ## License
 
 [MIT](LICENSE) © Kannan Dharmalingam
-
----
-
-<sub>Part of **[agentic-base](https://github.com/kannajune)** — practical, local‑first AI tooling.</sub>
