@@ -1,0 +1,16 @@
+"""Pure, dependency-free codebase-analysis functions.
+
+These are intentionally decoupled from MCP so they can be unit-tested and
+reused on their own.
+"""
+from .deps import get_dependency_graph
+from .hotspots import find_hotspots
+from .modules import explain_module
+from .stack import get_overview
+
+__all__ = [
+    "get_overview",
+    "get_dependency_graph",
+    "find_hotspots",
+    "explain_module",
+]
