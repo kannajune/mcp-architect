@@ -91,19 +91,31 @@ def dependency_graph(path: str = ".", language: str = "auto") -> str:
 
 
 @mcp.tool()
-def impact_analysis(target: str, path: str = ".", language: str = "auto") -> str:
+def impact_analysis(target: str = "", path: str = ".", language: str = "auto") -> str:
     """What could break if you change `target`? Walks the import graph backwards
     to list direct importers and the full transitive blast radius, and flags
     whether the target is a high-risk hub. Use before editing/refactoring a module.
 
     Args:
         target: Module or file to analyze, e.g. "app/core/db.py" or "app.core.db".
+                If omitted, returns the highest-impact modules to pick from.
         path: Repo root.
         language: 'auto', 'python', or 'js'/'ts'.
     """
     root = _resolve(path)
     if not root.is_dir():
         return f"❌ Not a directory: {root}"
+    if not target.strip():
+        dg = get_dependency_graph(root, language)
+        hubs = "\n".join(
+            f"- `{m['module']}` — imported by {m['imported_by']} modules"
+            for m in dg["most_depended_upon"][:5]
+        ) or "_no internal dependencies found_"
+        return (
+            "ℹ️ `impact_analysis` needs a **target** — the module or file you're about "
+            "to change, e.g. `app/core/db.py` or `app.core.db`.\n\n"
+            "Highest-impact modules worth checking first:\n" + hubs
+        )
     d = analyze_impact(root, target, language)
     if not d["found"]:
         hint = (

@@ -47,3 +47,9 @@ def test_not_found_returns_suggestions(chain: Path):
     d = analyze_impact(chain, "totally.missing")
     assert d["found"] is False
     assert "suggestions" in d
+
+
+def test_empty_target_is_graceful(chain: Path):
+    # An empty target must not raise — the server tool turns this into guidance.
+    d = analyze_impact(chain, "")
+    assert d["found"] is False

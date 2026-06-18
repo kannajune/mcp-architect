@@ -1,6 +1,6 @@
 [project]
 name = "mcp-architect"
-version = "0.2.0"
+version = "0.2.1"
 description = "Give any AI assistant real architectural understanding of a codebase — local, private, zero-config MCP server."
 readme = "README.md"
 requires-python = ">=3.10"
