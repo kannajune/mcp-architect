@@ -7,6 +7,10 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-server-purple.svg)](https://modelcontextprotocol.io/)
 
+<p align="center">
+  <img src="docs/demo.svg" alt="mcp-architect — Claude analyzing a repository's architecture, dependency graph, and hotspots" width="680">
+</p>
+
 AI coding assistants are great at *files* but blind to *architecture*. Every session you re‑explain the structure, paste the file tree, and hope it guesses your module boundaries right. **mcp-architect** is an [MCP](https://modelcontextprotocol.io/) server that hands your assistant a structured map of any codebase — tech stack, dependency graph, hotspots, and module summaries — computed **100% locally** with **no API keys and no model required**.
 
 It works with **Claude Desktop, Cursor, Windsurf, Cline**, or any MCP client.
