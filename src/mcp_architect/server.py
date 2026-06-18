@@ -10,6 +10,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 from .analysis import (
+    analyze_impact,
     explain_module,
     find_hotspots,
     get_dependency_graph,
@@ -86,6 +87,48 @@ def dependency_graph(path: str = ".", language: str = "auto") -> str:
         f"**{d['modules']} modules · {d['edges']} internal import edges**\n\n"
         f"## Most depended-upon (architectural hubs)\n{hubs}\n\n"
         f"## Circular dependencies\n{cycles}\n"
+    )
+
+
+@mcp.tool()
+def impact_analysis(target: str, path: str = ".", language: str = "auto") -> str:
+    """What could break if you change `target`? Walks the import graph backwards
+    to list direct importers and the full transitive blast radius, and flags
+    whether the target is a high-risk hub. Use before editing/refactoring a module.
+
+    Args:
+        target: Module or file to analyze, e.g. "app/core/db.py" or "app.core.db".
+        path: Repo root.
+        language: 'auto', 'python', or 'js'/'ts'.
+    """
+    root = _resolve(path)
+    if not root.is_dir():
+        return f"❌ Not a directory: {root}"
+    d = analyze_impact(root, target, language)
+    if not d["found"]:
+        hint = (
+            "\n\nDid you mean:\n" + "\n".join(f"- `{m}`" for m in d["suggestions"])
+            if d.get("suggestions") else ""
+        )
+        return f"❌ Couldn't find `{d['target']}` in the import graph.{hint}"
+
+    risk = (
+        "⚠️ **High-risk hub** — many modules depend on this; change carefully and test broadly."
+        if d["is_hub"] else "✅ Limited blast radius — relatively safe to change."
+    )
+    direct = "\n".join(f"- `{m}`" for m in d["direct_importers"][:30]) or "_none — nothing imports this_"
+    trans = "\n".join(f"- `{m}`" for m in d["transitive_importers"][:30]) or "_none_"
+    more = (
+        f"\n…and {d['transitive_count'] - 30} more"
+        if d["transitive_count"] > 30 else ""
+    )
+    return (
+        f"# Impact of changing `{d['target']}`\n\n"
+        f"{risk}\n\n"
+        f"**Direct importers: {d['direct_count']} · "
+        f"Transitive blast radius: {d['transitive_count']} of {d['total_modules']} modules**\n\n"
+        f"## Direct importers\n{direct}\n\n"
+        f"## Full blast radius (transitive)\n{trans}{more}\n"
     )
 
 
