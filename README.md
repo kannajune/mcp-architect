@@ -2,6 +2,7 @@
 
 > **Stop pasting your file tree into Claude.** Give any AI assistant *real* architectural understanding of a codebase — **local, private, zero‑config.**
 
+[![PyPI](https://img.shields.io/pypi/v/mcp-architect.svg)](https://pypi.org/project/mcp-architect/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-server-purple.svg)](https://modelcontextprotocol.io/)
@@ -42,7 +43,7 @@ Everything runs on your machine. Your code never leaves it.
 }
 ```
 
-> No PyPI yet? Run straight from source:
+> Prefer pip? `pip install mcp-architect`. Or run the latest straight from source:
 > ```json
 > { "mcpServers": { "architect": {
 >     "command": "uvx",
