@@ -121,7 +121,8 @@ def _find_cycles(graph: dict[str, set[str]]) -> list[list[str]]:
     return cycles
 
 
-def get_dependency_graph(root: str | Path, language: str = "auto") -> dict:
+def build_graph(root: str | Path, language: str = "auto") -> dict[str, set[str]]:
+    """Return the raw internal-import adjacency: {module: {modules it imports}}."""
     root = Path(root)
     graph: dict[str, set[str]] = {}
     lang = language.lower()
@@ -129,6 +130,12 @@ def get_dependency_graph(root: str | Path, language: str = "auto") -> dict:
         graph.update(_collect_python(root))
     if lang in ("auto", "js", "ts", "javascript", "typescript"):
         graph.update(_collect_js(root))
+    return graph
+
+
+def get_dependency_graph(root: str | Path, language: str = "auto") -> dict:
+    graph = build_graph(root, language)
+    root = Path(root)
 
     edge_count = sum(len(v) for v in graph.values())
     fan_in: dict[str, int] = {}

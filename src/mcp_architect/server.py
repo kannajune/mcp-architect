@@ -10,6 +10,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 from .analysis import (
+    build_mermaid,
     explain_module,
     find_hotspots,
     get_dependency_graph,
@@ -86,6 +87,27 @@ def dependency_graph(path: str = ".", language: str = "auto") -> str:
         f"**{d['modules']} modules · {d['edges']} internal import edges**\n\n"
         f"## Most depended-upon (architectural hubs)\n{hubs}\n\n"
         f"## Circular dependencies\n{cycles}\n"
+    )
+
+
+@mcp.tool()
+def dependency_diagram(path: str = ".", language: str = "auto", max_nodes: int = 40) -> str:
+    """Render the internal dependency graph as a Mermaid flowchart the client can
+    display. Shows the most-connected modules and how they import each other.
+
+    Args:
+        path: Repo path to analyze.
+        language: 'auto', 'python', or 'js'/'ts'.
+        max_nodes: Cap the number of nodes for readability (default 40).
+    """
+    root = _resolve(path)
+    if not root.is_dir():
+        return f"❌ Not a directory: {root}"
+    diagram = build_mermaid(root, language, max_nodes)
+    return (
+        f"Dependency diagram for `{root.name}` "
+        f"(top {max_nodes} most-connected modules):\n\n"
+        f"```mermaid\n{diagram}\n```"
     )
 
 

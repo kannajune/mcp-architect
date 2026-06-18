@@ -110,6 +110,7 @@ Restart your client. **That's it** — no keys, no model download.
 |------|----------------------|
 | `architecture_overview` | Languages, frameworks, ecosystems, size, top‑level structure, entry points |
 | `dependency_graph` | Internal import graph, architectural hubs, **circular dependencies** |
+| `dependency_diagram` | The dependency graph as a ready-to-render **Mermaid** flowchart |
 | `hotspots` | Largest / most complex / most‑changed (git) / highest‑risk files |
 | `explain` | Deep‑dive a folder or file: classes, functions, external deps |
 
@@ -162,7 +163,7 @@ together.
 
 ## Roadmap
 
-- [ ] Mermaid dependency‑diagram output
+- [x] Mermaid dependency‑diagram output
 - [ ] Layered‑architecture / boundary‑violation detection
 - [ ] Go, Rust & Java import graphs
 - [ ] Optional local‑LLM (Ollama) narrative summaries
