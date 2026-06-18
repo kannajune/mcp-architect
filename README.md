@@ -110,6 +110,7 @@ Restart your client. **That's it** — no keys, no model download.
 |------|----------------------|
 | `architecture_overview` | Languages, frameworks, ecosystems, size, top‑level structure, entry points |
 | `dependency_graph` | Internal import graph, architectural hubs, **circular dependencies** |
+| `impact_analysis` | **What breaks if you change X** — direct importers + transitive blast radius, hub risk |
 | `hotspots` | Largest / most complex / most‑changed (git) / highest‑risk files |
 | `explain` | Deep‑dive a folder or file: classes, functions, external deps |
 
