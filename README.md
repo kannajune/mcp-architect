@@ -144,6 +144,22 @@ Set `MCP_ARCHITECT_ROOT` so tools default to a fixed repo and you can omit paths
 
 ---
 
+## How it compares
+
+mcp-architect isn't a semantic search engine or a context packer — it's a
+**structural lens** any AI assistant can call on demand. It's designed to
+*complement* the tools below, not replace them:
+
+| Tool / approach | Great at | What mcp-architect adds |
+|---|---|---|
+| **Cursor codebase indexing** | Semantic snippet retrieval, inside Cursor | Works in **any** MCP client (Claude Desktop, Cline, Windsurf, Cursor…), **100% local** (no cloud embeddings), and returns **architecture** — dependency graph, cycles, hotspots — not just relevant snippets |
+| **Serena** (LSP-based code agent) | Precise symbol-level navigation & edits | **Zero-config, zero heavy deps** (stdlib — no language servers to install) and a **high-level architectural map** instead of symbol-by-symbol operations |
+| **RepoPrompt** (context packing) | Hand-picking files into a prompt | The assistant **pulls** structured architecture on demand via tools — no manual file selection, no token-budget juggling |
+
+**In one line:** Cursor and Serena help the AI *read* your code; mcp-architect
+helps it *understand the architecture* — locally, in any client. They stack well
+together.
+
 ## Roadmap
 
 - [ ] Mermaid dependency‑diagram output
