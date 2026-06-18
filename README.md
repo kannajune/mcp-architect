@@ -28,6 +28,14 @@ Everything runs on your machine. Your code never leaves it.
 
 ## Quickstart
 
+### Install
+
+```bash
+pip install mcp-architect
+```
+
+…or skip the install entirely and let your MCP client fetch it on demand with `uvx` (shown below).
+
 ### 1. Add it to your MCP client
 
 **Claude Desktop** — edit `claude_desktop_config.json`:
